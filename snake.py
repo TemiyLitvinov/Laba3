@@ -1,6 +1,8 @@
 import pygame
 
+
 class Snake:
-    def __init__(self, x, y):
+    def __init__(self, x, y, speed):
         self.x = x
         self.y = y
+        self.speed = speed
