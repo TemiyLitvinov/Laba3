@@ -4,7 +4,7 @@ import pygame
 class Game:
     pygame.init()
 
-    def __init__(self, width, height):
+    def __init__(self, width, height, score):
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
