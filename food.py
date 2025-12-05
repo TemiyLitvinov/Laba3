@@ -13,4 +13,3 @@ class Food:
         if not snake.occupies((x, y)):
             self.pos = (x, y)
             return
-
