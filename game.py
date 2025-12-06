@@ -1,17 +1,18 @@
 import pygame
+from pygame import RESIZABLE
+
 import config
 from snake import Snake
 from food import Food
 from input_handler import InputHandler
 from renderer import Renderer
 
-
 class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("SUPER Snake")
 
-        self.screen = pygame.display.set_mode((config.WIDTH, config.HEIGHT))
+        self.screen = pygame.display.set_mode((config.WIDTH, config.HEIGHT), RESIZABLE)
         self.clock = pygame.time.Clock()
 
         self.renderer = Renderer(self.screen)
@@ -24,14 +25,16 @@ class Game:
 
         self.input_handler = InputHandler(self.snake, self)
 
+        self.move_delay = config.MOVE_DELAY
+        self.time_since_move = 0
+
     def init_game_objects(self):
         start_x = config.COLUMNS // 2
         start_y = config.ROWS // 2
 
-        self.snake = Snake(start_x, start_y, config.SIZE_CELL, start_length=3, current_direction="RIGHT")
+        self.snake = Snake(start_x, start_y, step=1, start_length=3, current_direction="RIGHT")
 
         self.food = Food(self.snake)
-
         self.score = 0
 
     def handle_events(self):
@@ -39,12 +42,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
-    def update(self):
-        if self.paused or self.game_over:
-            return
-
-        self.input_handler.input_process()
-
+    def game_tick(self):
         self.snake.update()
 
         if self.snake.collide_self():
@@ -71,6 +69,8 @@ class Game:
         self.init_game_objects()
 
         self.input_handler.snake = self.snake
+        self.input_handler.prev_keys = pygame.key.get_pressed()
+        self.time_since_move = 0
 
     def quit(self):
         self.running = False
@@ -82,6 +82,16 @@ class Game:
     def run(self):
         while self.running:
             self.handle_events()
-            self.update()
+
+            self.input_handler.input_process()
+
+            dt = self.clock.tick(config.FPS)
+
+            if not self.paused and not self.game_over:
+                self.time_since_move += dt
+
+                while self.time_since_move >= self.move_delay:
+                    self.game_tick()
+                    self.time_since_move -= self.move_delay
+
             self.render()
-            self.clock.tick(config.FPS)

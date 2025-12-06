@@ -12,13 +12,13 @@ class InputHandler:
     def input_process(self):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.snake.set_direction("UP")
-        elif keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.snake.set_direction("DOWN")
-        elif keys[pygame.K_LEFT]:
+        elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.snake.set_direction("LEFT")
-        elif keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.snake.set_direction("RIGHT")
 
         self._edge_trigger(keys, pygame.K_p, self.game.toggle_pause)
