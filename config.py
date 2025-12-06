@@ -14,4 +14,4 @@ SNAKE_COLOR = (0, 255, 0)
 FOOD_COLOR = (255, 0, 0)
 TEXT_COLOR = (255, 255, 255)
 
-FONT_NAME = "Змейка"
+FONT_NAME = None

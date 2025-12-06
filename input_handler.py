@@ -4,13 +4,15 @@ from game import Game
 
 
 class InputHandler:
-    def __init__(self, snake : Snake, game : Game):
-        pygame.init()
+    def __init__(self, snake: Snake, game: Game):
         self.snake = snake
         self.game = game
 
+        self.prev_keys = pygame.key.get_pressed()
+
     def input_process(self):
         keys = pygame.key.get_pressed()
+
         if keys[pygame.K_UP]:
             self.snake.set_direction("UP")
         elif keys[pygame.K_DOWN]:
@@ -20,11 +22,11 @@ class InputHandler:
         elif keys[pygame.K_RIGHT]:
             self.snake.set_direction("RIGHT")
 
-        if keys[pygame.K_p]:
-            self.game.toggle_pause()
+        self._edge_trigger(keys, pygame.K_p, self.game.toggle_pause)
+        self._edge_trigger(keys, pygame.K_r, self.game.restart)
+        self._edge_trigger(keys, pygame.K_q, self.game.quit)
+        self.prev_keys = keys
 
-        if keys[pygame.K_r]:
-            self.game.restart()
-
-        if keys[pygame.K_q]:
-            self.game.quit()
+    def _edge_trigger(self, keys, key, callback):
+        if keys[key] and not self.prev_keys[key]:
+            callback()

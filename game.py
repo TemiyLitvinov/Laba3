@@ -7,7 +7,7 @@ from renderer import Renderer
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, screen):
         pygame.init()
         pygame.display.set_caption("SUPER Snake")
 
