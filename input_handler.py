@@ -5,11 +5,11 @@ from game import Game
 
 class InputHandler:
     def __init__(self, snake : Snake, game : Game):
+        pygame.init()
         self.snake = snake
         self.game = game
-        pygame.init()
 
-    def input_proccess(self):
+    def input_process(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             self.snake.set_direction("UP")
@@ -19,3 +19,12 @@ class InputHandler:
             self.snake.set_direction("LEFT")
         elif keys[pygame.K_RIGHT]:
             self.snake.set_direction("RIGHT")
+
+        if keys[pygame.K_p]:
+            self.game.toggle_pause()
+
+        if keys[pygame.K_r]:
+            self.game.restart()
+
+        if keys[pygame.K_q]:
+            self.game.quit()

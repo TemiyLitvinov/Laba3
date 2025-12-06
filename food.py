@@ -1,6 +1,5 @@
 import random
 import config
-from config import COLUMNS
 from snake import Snake
 
 

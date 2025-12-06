@@ -37,3 +37,26 @@ class Renderer:
         rect = txt.get_rect(center=(config.WIDTH // 2, config.HEIGHT // 2))
         self.screen.blit(txt, rect)
 
+    def draw_game_over(self, score):
+        txt = self.font.render("GAME OVER", True, config.TEXT_COLOR)
+        rect = txt.get_rect(center=(config.WIDTH // 2, config.HEIGHT // 2 - 30))
+        self.screen.blit(txt, rect)
+
+        sub = self.font.render(f"Score: {score} — Press R to restart or Q to quit",
+        True, config.TEXT_COLOR)
+        rect2 = sub.get_rect(center=(config.WIDTH // 2, config.HEIGHT // 2 + 30))
+        self.screen.blit(sub, rect2)
+
+    def render(self, snake, food, score, paused=False, game_over=False):
+        self.screen.fill(config.BG_COLOR)
+
+        self.draw_grid()
+
+        self.draw_food(food)
+        self.draw_snake(snake)
+
+        if paused:
+            self.draw_pause()
+        elif game_over:
+            self.draw_game_over(score)
+
