@@ -1,10 +1,9 @@
 import pygame
 from snake import Snake
-from game import Game
 
 
 class InputHandler:
-    def __init__(self, snake: Snake, game: Game):
+    def __init__(self, snake: Snake, game):
         self.snake = snake
         self.game = game
 

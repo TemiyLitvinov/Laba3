@@ -13,7 +13,6 @@ class Food:
             x = random.randint(0, config.COLUMNS - 1)
             y = random.randint(0, config.ROWS - 1)
 
-            # если клетка свободна → ставим еду
             if not snake.occupies((x, y)):
                 self.pos = (x, y)
                 return

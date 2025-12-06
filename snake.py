@@ -29,13 +29,13 @@ class Snake:
         head_x, head_y = self.body[0]
 
         if self.current_direction == 'UP':
-            head_y -= self.step
+            head_y -= 1
         elif self.current_direction == 'DOWN':
-            head_y += self.step
+            head_y += 1
         elif self.current_direction == 'LEFT':
-            head_x -= self.step
+            head_x -= 1
         elif self.current_direction == 'RIGHT':
-            head_x += self.step
+            head_x += 1
 
         new_head = (head_x, head_y)
         self.body.appendleft(new_head)

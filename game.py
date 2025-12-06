@@ -7,7 +7,7 @@ from renderer import Renderer
 
 
 class Game:
-    def __init__(self, screen):
+    def __init__(self):
         pygame.init()
         pygame.display.set_caption("SUPER Snake")
 
@@ -25,11 +25,10 @@ class Game:
         self.input_handler = InputHandler(self.snake, self)
 
     def init_game_objects(self):
-
         start_x = config.COLUMNS // 2
         start_y = config.ROWS // 2
 
-        self.snake = Snake(start_x, start_y, 3, start_length=3, current_direction="RIGHT")
+        self.snake = Snake(start_x, start_y, config.SIZE_CELL, start_length=3, current_direction="RIGHT")
 
         self.food = Food(self.snake)
 
@@ -41,19 +40,25 @@ class Game:
                 self.running = False
 
     def update(self):
-
         if self.paused or self.game_over:
             return
 
-        # обработка клавиш
         self.input_handler.input_process()
 
         self.snake.update()
+
+        if self.snake.collide_self():
+            self.game_over = True
+            return
 
         if self.snake.head() == self.food.pos:
             self.score += 1
             self.snake.grow()
             self.food.random_respawn(self.snake)
+
+        hx, hy = self.snake.head()
+        if not (0 <= hx < config.COLUMNS and 0 <= hy < config.ROWS):
+            self.game_over = True
 
     def toggle_pause(self):
         if not self.game_over:
@@ -62,7 +67,9 @@ class Game:
     def restart(self):
         self.paused = False
         self.game_over = False
+
         self.init_game_objects()
+
         self.input_handler.snake = self.snake
 
     def quit(self):
@@ -77,5 +84,4 @@ class Game:
             self.handle_events()
             self.update()
             self.render()
-
             self.clock.tick(config.FPS)
