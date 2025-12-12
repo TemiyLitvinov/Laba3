@@ -5,6 +5,13 @@ P - кнопка паузы
 R - рестарт игры
 Q - выход из игры
 
+Активация venv:
+Windows:
+venv\Scripts\activate
+
+MacOS/Linux:
+source ./.venv/bin/activate
+
 Инструкция по запуску:
 
 1. Установка библиотеки pygame:
